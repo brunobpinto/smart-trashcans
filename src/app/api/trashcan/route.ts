@@ -1,27 +1,8 @@
+import { createTrashcanSchema } from "~/server/api/schemas/trashcan";
+import { isAuthenticated } from "~/server/services/authentication";
 import { NextResponse } from "next/server";
-import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { createTrashcanSchema } from "~/server/api/schemas/trashcan";
-import { verifyToken, getTokenFromRequest } from "~/server/auth/jwt";
-
-// Authentication
-async function isAuthenticated(request: Request) {
-  // Verify NextAuth session first
-  const session = await auth();
-  if (session) {
-    return true;
-  }
-
-  // If there is no session, verify JWT token
-  const token = getTokenFromRequest(request);
-  if (token) {
-    const payload = await verifyToken(token);
-    return payload !== null;
-  }
-
-  return false;
-}
 
 // List All Trashcans
 export async function GET(request: Request) {
