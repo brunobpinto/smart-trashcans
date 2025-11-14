@@ -1,0 +1,12 @@
+// Cleaning Event of a Trashcan (Assigned to a worker)
+model Cleanup {
+  id         String   @id @default(uuid())
+  trashcanId String
+  trashcan   Trashcan @relation(fields: [trashcanId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@index([trashcanId, createdAt])
+  @@index([userId, createdAt])
+}
