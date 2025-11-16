@@ -7,4 +7,4 @@
 
 ## Changes
 <!-- The commit body will be automatically inserted below -->
-<!-- PR-COMMIT-BODY -->
+<!-- PR-COMMIT-BODY:ONLY -->
