@@ -123,3 +123,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes toast-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.toast-progress-bar {
+  transform-origin: left;
+  animation: toast-progress var(--toast-duration, 4000ms) linear forwards;
+}
+
+/* Pause progress animation when Sonner pauses the toast on hover */
+[data-sonner-toast]:hover .toast-progress-bar {
+  animation-play-state: paused;
+}

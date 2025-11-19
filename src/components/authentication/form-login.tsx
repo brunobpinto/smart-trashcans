@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "~/lib/utils"
 import { Button } from "~/components/ui/button"
@@ -17,10 +18,14 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "~/components/ui/field"
 import { Input } from "~/components/ui/input"
 import { Spinner } from "~/components/ui/spinner"
+import logoNameMascot from "../../../public/logo-name-mascot.svg"
+import type { StaticImageData } from "next/image"
+import { showErrorToast } from "~/components/toast"
+import { ResetPasswordDialog } from "~/components/authentication/dialog-password"
+import { DialogSignup } from "~/components/authentication/dialog-signup"
 
 export function LoginForm({
   className,
@@ -30,12 +35,10 @@ export function LoginForm({
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setIsLoading(true);
 
     try {
@@ -47,13 +50,19 @@ export function LoginForm({
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        showErrorToast({
+          title: "Login Failed",
+          description: "Invalid email or password",
+        })
       } else if (result?.ok) {
         router.push(callbackUrl);
         router.refresh();
       }
     } catch {
-      setError("Error when logging in");
+      showErrorToast({
+          title: "Login Failed",
+          description: "Error when logging in",
+        })
     } finally {
       setIsLoading(false);
     }
@@ -61,27 +70,23 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Image src={logoNameMascot as StaticImageData} alt="Smart Trashcans"  width={350} style={{ margin: "0 auto", marginBottom: "-10px" }}/>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Login to your account</CardTitle>
+          <CardTitle className="text-xl">Welcome back</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Sign in to keep your smart trashcans <br></br> monitored and clean
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup>
-              {error && (
-                <div className="rounded-md bg-red-50 p-3 text-sm text-red-800">
-                  {error}
-                </div>
-              )}
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -91,12 +96,14 @@ export function LoginForm({
               <Field>
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
+                  <ResetPasswordDialog>
+                    <button
+                      type="button"
+                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    >
+                      Forgot your password?
+                    </button>
+                  </ResetPasswordDialog>
                 </div>
                 <Input 
                 id="password" 
@@ -112,9 +119,6 @@ export function LoginForm({
                   {isLoading && <Spinner className="mr-0" />}
                   {isLoading ? "Logging in..." : "Login"}
                 </Button>
-              </Field>
-              <FieldSeparator>Or continue with</FieldSeparator>
-              <Field>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -124,8 +128,18 @@ export function LoginForm({
                   </svg>
                   Login with Google
                 </Button>
+                </Field>
+                <Field>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Don&apos;t have an account?{" "}
+                  <DialogSignup>
+                    <button
+                      type="button"
+                      className="inline-block text-sm font-medium underline-offset-4 hover:underline"
+                    >
+                      Sign up
+                    </button>
+                  </DialogSignup>
                 </FieldDescription>
               </Field>
             </FieldGroup>

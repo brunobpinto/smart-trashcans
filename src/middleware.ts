@@ -6,15 +6,15 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
 
   // If you are not authenticated and are not on the login page
-  if (!session && !request.nextUrl.pathname.startsWith("/auth/login")) {
-    const loginUrl = new URL("/auth/login", request.url);
+  if (!session && !request.nextUrl.pathname.startsWith("/sign-in")) {
+    const loginUrl = new URL("/sign-in", request.url);
     // Adds a redirect to the original page
     loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
   }
 
   // If you are logged in and try to access the login page, it redirects to the home page.
-  if (session && request.nextUrl.pathname.startsWith("/auth/login")) {
+  if (session && request.nextUrl.pathname.startsWith("/sign-in")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
