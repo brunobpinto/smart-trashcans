@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/dialog"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
-import { showSuccessToast } from "~/components/toast"
+import { showSuccessToast } from "~/components/app-toast"
 
 type ResetPasswordDialogProps = {
   children: ReactNode
@@ -55,7 +55,7 @@ export function ResetPasswordDialog({ children }: ResetPasswordDialogProps) {
                   showSuccessToast({
                     title: "Recovery Requested",
                     description:
-                      "Check your email for instructions A descrição fica em flex-1 abaixo do título; se for muito longa, o toast cresce apenas para baixo.",
+                      "Check your email for instructions.",
                   })
                 }
               >

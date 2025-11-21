@@ -3,6 +3,9 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { SidebarProvider } from "~/components/ui/sidebar";
+import { Toaster } from "~/components/ui/sonner";
+import { AppSidebar } from "~/components/app-sidebar";
 
 export const metadata: Metadata = {
   title: "Smart Trashcans",
@@ -19,8 +22,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body><SessionProvider>{children}</SessionProvider></body>
-    </html>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="flex-1">
+        <html lang="en" className={`${geist.variable}`}>
+          <body>
+            <SessionProvider>
+              {children}
+              <Toaster theme="light" expand={false} position="top-right" />
+            </SessionProvider>
+          </body>
+        </html>
+      </main>
+    </SidebarProvider>
   );
 }

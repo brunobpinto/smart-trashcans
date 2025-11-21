@@ -49,6 +49,7 @@ model Status {
 
     @@unique([trashcanId, hour])
     @@index([trashcanId, hour])
+    @@index([hour])
 }
 
 // Cleaning Event of a Trashcan (Assigned to a worker)

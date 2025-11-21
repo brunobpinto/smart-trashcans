@@ -3,6 +3,7 @@ import { isAuthenticated } from "~/server/services/authentication";
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { z } from "zod";
+import { hash } from "bcryptjs";
 
 // Get User By ID
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -47,7 +48,18 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
     }
     const validatedData = updateUserSchema.parse(body);
-    const user = await db.user.update({ where: { id }, data: validatedData });
+
+    // Hash password if it is being updated
+    let dataToUpdate = validatedData;
+    if (validatedData.password) {
+      const hashedPassword = await hash(validatedData.password, 10);
+      dataToUpdate = {
+        ...validatedData,
+        password: hashedPassword,
+      };
+    }
+
+    const user = await db.user.update({ where: { id }, data: dataToUpdate });
     return NextResponse.json(user);
   } catch (error) {
     if (error instanceof z.ZodError) {

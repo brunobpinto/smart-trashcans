@@ -3,6 +3,8 @@ import { isAuthenticated } from "~/server/services/authentication";
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { z } from "zod";
+import { hash } from "bcryptjs";
+import { publishUserCreatedMqtt } from "~/server/mqtt";
 
 // List All Users
 export async function GET(request: Request) {
@@ -47,7 +49,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
     }
     const validatedData = createUserSchema.parse(body);
-    const user = await db.user.create({ data: validatedData });
+
+    // Hash password before saving
+    const hashedPassword = await hash(validatedData.password, 10);
+
+    const user = await db.user.create({
+      data: {
+        ...validatedData,
+        password: hashedPassword,
+      },
+    });
+
+    // Fire-and-forget MQTT notification; errors are logged but do not block the response
+    void publishUserCreatedMqtt({
+      name: user.name,
+      rfidTag: user.rfidTag ?? null,
+      role: user.role,
+    });
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {

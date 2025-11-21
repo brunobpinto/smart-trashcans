@@ -23,7 +23,7 @@ import { Input } from "~/components/ui/input"
 import { Spinner } from "~/components/ui/spinner"
 import logoNameMascot from "../../../public/logo-name-mascot.svg"
 import type { StaticImageData } from "next/image"
-import { showErrorToast } from "~/components/toast"
+import { showErrorToast } from "~/components/app-toast"
 import { ResetPasswordDialog } from "~/components/authentication/dialog-password"
 import { DialogSignup } from "~/components/authentication/dialog-signup"
 
