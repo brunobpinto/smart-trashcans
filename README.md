@@ -37,5 +37,6 @@ We would like to extend our heartfelt thanks to everyone who contributed to the 
 
 - [@aurorarichaud](https://github.com/aurorarichaud)
 - [@brunobpinto](https://github.com/brunobpinto)
+- [@bathwaterpizza](https://github.com/bathwaterpizza)
 
 Thank you all for your hard work and collaboration!
