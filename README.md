@@ -32,6 +32,13 @@ All 3D-printed files can be found in the `/3D-FILES` directory.
 > While the 3D parts can be printed using various materials, it is recommended to use weather-resistant materials if the device will be installed outdoors. Materials such as PETG, ASA, or ABS are suitable for outdoor exposure, as they can withstand sunlight and moisture. PLA is not recommended, as it degrades quickly under heat and UV light.
 <div>‎</div>
 
+## PCB Schematic
+![Smart-Trashcans-Schematic](https://github.com/user-attachments/assets/2b7cc0a1-969f-4f35-9d3f-b01bc12e4aae)
+
+> [!NOTE]
+> The full circuit, including the schematic, PCB design, and 3D model, is available on the [EasyEDA Project.](https://bit.ly/smart-trashcans)
+<div>‎</div>
+
 ## Contributors
 We would like to extend our heartfelt thanks to everyone who contributed to the development of this project. Your support, ideas, and dedication were essential in bringing this project to life.
 
