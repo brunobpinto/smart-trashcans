@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { z } from "zod";
 import { hash } from "bcryptjs";
+import { publishUserDeletedMqtt } from "~/server/mqtt";
 
 // Get User By ID
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -86,7 +87,23 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const { id } = await params;
+    
+    // Fetch user data before deleting (needed for MQTT notification)
+    const user = await db.user.findUnique({ where: { id } });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    
+    // Delete the user
     await db.user.delete({ where: { id } });
+    
+    // Send MQTT DELETE notification
+    await publishUserDeletedMqtt({
+      name: user.name,
+      rfidTag: user.rfidTag,
+      role: user.role,
+    });
+    
     return NextResponse.json({ message: "User deleted successfully" });
   } catch (error) {
     if (error && typeof error === "object" && "code" in error && error.code === "P2025") {

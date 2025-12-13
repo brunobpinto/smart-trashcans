@@ -1,6 +1,35 @@
 import { MapPin } from "lucide-react"
+import { db } from "~/server/db"
+import { LocationsMap, type TrashcanLocation } from "~/components/locations/locations-map"
 
 export default async function LocationsPage() {
+  const trashcans = await db.trashcan.findMany({
+    where: {
+      latitude: { not: null },
+      longitude: { not: null },
+    },
+    orderBy: { name: "asc" },
+    include: {
+      statuses: {
+        orderBy: { createdAt: "desc" },
+        take: 1,
+      },
+    },
+  })
+
+  const trashcanLocations: TrashcanLocation[] = trashcans
+    .filter((t) => t.latitude != null && t.longitude != null)
+    .map((t) => ({
+      id: t.id,
+      name: t.name,
+      location: t.location ?? null,
+      description: t.description ?? null,
+      latitude: t.latitude!,
+      longitude: t.longitude!,
+      binType: t.binType,
+      capacityPct: t.statuses[0]?.capacityPct ?? null,
+    }))
+
   return (
     <main className="flex w-full flex-col gap-6 p-6">
       <div className="flex w-full items-center justify-between px-5 mt-4">
@@ -20,7 +49,7 @@ export default async function LocationsPage() {
         </div>
       </div>
       <div className="px-5">
-        {/* TODO: Add locations map / list here */}
+        <LocationsMap trashcans={trashcanLocations} />
       </div>
     </main>
   )
