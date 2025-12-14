@@ -4,6 +4,17 @@
 This project was developed as the final activity for the Internet of Things (IoT) Project class at PUC-Rio, Brazil. It presents a smart waste monitoring system for PUC-Rio’s campus bins. Each device tracks fill levels, cleaning history, and usage peaks, displaying the data on an interactive dashboard with a campus map. The system classifies bins by cleaning urgency using color indicators: green, yellow, and red.
 <br><br>
 
+## Video
+Watch how we made this project in the video below:
+
+https://github.com/user-attachments/assets/3428fde6-ffb1-4c31-b206-a627dc737ec0
+
+## Important Links
+- Entrepreneurship Presentation: [Google Slides](https://docs.google.com/presentation/d/1eFLQctskUMzdFxHRRN8Uq6AJgMyZpdaHZNqkaKqREag/edit?usp=sharing)
+- Final Project Video: [Youtube](https://youtu.be/zSX_mzMJ4nE)
+- 3D Modelling and Assembly: [OnShape](https://cad.onshape.com/documents/b87a7e99e19c62217d651890/w/9fb80a89a01454b3f9800e65/e/fb9532ab13b9a6d6421fd709?renderMode=0&uiState=69321752dd5747af1b660e4b)
+- PCB Schematic: [EasyEDA Project.](https://bit.ly/smart-trashcans)
+
 ## How It Works
 The Smart Trashcans system combines IoT hardware, wireless communication, and a cloud-connected dashboard to monitor waste levels and cleaning activity across the PUC-Rio campus.
 Below is an overview of how each component interacts to provide real-time insights.
