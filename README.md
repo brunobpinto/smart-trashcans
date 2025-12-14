@@ -7,7 +7,7 @@ This project was developed as the final activity for the Internet of Things (IoT
 ## Video
 Watch how we made this project in the video below:
 
-https://github.com/user-attachments/assets/3428fde6-ffb1-4c31-b206-a627dc737ec0
+https://github.com/user-attachments/assets/5f297aff-46dd-469c-831e-9b2488daee38
 
 ## Important Links
 - Entrepreneurship Presentation: [Google Slides](https://docs.google.com/presentation/d/1eFLQctskUMzdFxHRRN8Uq6AJgMyZpdaHZNqkaKqREag/edit?usp=sharing)
