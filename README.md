@@ -276,6 +276,10 @@ Pre-populated Data:
 > [!IMPORTANT]
 > This project uses SQLite stored on the ESP32 S3's LittleFS filesystem for access control management.
 
+## Web-Server Screenshots
+
+https://github.com/user-attachments/assets/3d598d5b-c10e-4606-8ba2-fbc61875179e
+
 ## Achievements
 Entrepreneurship Fair Winner – The Smart Trashcans project won an entrepreneurship fair held at PUC-Rio on December 5th, recognizing the project for its innovation, technical execution, and real-world impact.
 
